@@ -7,7 +7,12 @@ import (
 )
 
 func stream(ctx context.Context, abortChan chan error, deviceConfig malgo.DeviceConfig, deviceCallbacks malgo.DeviceCallbacks) error {
-	device, err := malgo.InitDevice(malgo.DefaultContext, deviceConfig, deviceCallbacks)
+	ctx, err := malgo.InitContext(nil, malgo.ContextConfig{}, nil)
+	if err != nil {
+		return err
+	}
+
+	device, err := malgo.InitDevice(ctx.Context, deviceConfig, deviceCallbacks)
 	if err != nil {
 		return err
 	}
